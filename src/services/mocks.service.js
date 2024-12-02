@@ -27,14 +27,14 @@ class MocksServices {
         for (let i = 0; i < usersQuantity; i++) {
             let first_name = faker.person.firstName();
             let last_name = faker.person.lastName();
-            let email =  faker.internet.exampleEmail({ firstName: first_name });
+            let email = faker.internet.exampleEmail({ firstName: first_name });
 
             users.push({
                 _id: faker.database.mongodbObjectId(),
                 first_name: first_name,
                 last_name: last_name,
                 email: email,
-                password:  createHash("coder123"),
+                password: await createHash("coder123"),
                 role: faker.helpers.arrayElement(roles),
                 pets: [],
             });
@@ -43,34 +43,16 @@ class MocksServices {
     }
 
     static async generateData(usersQuantity, petsQuantity) {
+        const userMocks = await this.genetareUsers(usersQuantity);
+        const petsMocks = await this.generatePets(petsQuantity);
 
-        const users = [];
-        const roles = ["user", "admin"];
-        
-        for (let i = 0; i < usersQuantity; i++) {
-            let first_name = await faker.person.firstName();  // Esperamos la respuesta de faker
-            let last_name = await faker.person.lastName();
-            let email = await faker.internet.exampleEmail({ firstName: first_name });
-            const pets = await this.generatePets(petsQuantity);  // Esperamos que se generen las mascotas
-        
-            users.push({
-                _id: faker.database.mongodbObjectId(),
-                first_name: first_name,
-                last_name: last_name,
-                email: email,
-                password: await createHash("coder123"),  // Esperamos que se cree el hash de la contraseña
-                role: await faker.helpers.arrayElement(roles),  // Esperamos que se seleccione un rol aleatorio
-                pets: pets
-            });
-        }
-        console.log(users);
-        await userModel.insertMany(users)
-        await users.save()
-        
-        return await users
+        const user = await userModel.insertMany(userMocks);
+        const pets = await petModel.insertMany(petsMocks);
+        await user.save();
+        await pets.save();
+
+        return ({user, pets})
     }
-
-   
 }
 
 export default MocksServices;

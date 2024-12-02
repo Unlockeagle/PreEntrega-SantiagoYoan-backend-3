@@ -45,22 +45,22 @@ class MocksController {
     }
 
     static async postMockingData(req, res, next) {
-        const usersQuantity = req.body.usersQuantity;
-        const petsQuantity = req.body.petsQuantity;
+        const usersQuantity = req.body.usersQuantity || 50
+        const petsQuantity = req.body.petsQuantity || 50
         try {
-            if (!usersQuantity) {
-                throw CustomError.crearError({
-                    nombre: "MockingData, Falta la cantidad",
-                    causa: generateInfoError({ petsQuantity, usersQuantity }),
-                    mensaje: "Error al intentar crear mockingUsers",
-                    codigo: EErrors.TIPO_INALIDO,
-                });
-            }
+            // if (!usersQuantity) {
+            //     throw CustomError.crearError({
+            //         nombre: "MockingData, Falta la cantidad",
+            //         causa: generateInfoError({petsQuantity, usersQuantity} ),
+            //         mensaje: "Error al intentar crear mockingUsers",
+            //         codigo: EErrors.TIPO_INALIDO,
+            //     });
+            // }
 
-            const users = await MocksServices.generateData(usersQuantity, petsQuantity);
+            await MocksServices.generateData(usersQuantity, petsQuantity);
            
             
-            res.send({ status: "success", payload: users });
+            res.send({ status: "success", message: `users created${usersQuantity} and pets created ${petsQuantity}` });
         } catch (error) {
             next(error);
         }

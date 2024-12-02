@@ -7,7 +7,7 @@ const router = Router()
 router.get('/mockingpets', MocksController.getMockingPets)
 router.get('/mockingusers', MocksController.getMockingUser)
 //debe ser post pero lo debo cambiar
-router.post('/generatedata',MocksController.postMockingData)
+router.post('/generatedata', MocksController.postMockingData)
 
 export default router
 
