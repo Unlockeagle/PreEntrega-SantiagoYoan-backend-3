@@ -18,7 +18,7 @@ class MocksController {
                     codigo: EErrors.TIPO_INALIDO,
                 });
             }
-            const pets = await MocksServices.genetarePets(petsQuantity);
+            const pets = await MocksServices.generatePets(petsQuantity);
             res.send({ status: "success", payload: pets });
         } catch (error) {
             next(error);
@@ -26,7 +26,7 @@ class MocksController {
     }
 
     static async getMockingUser(req, res, next) {
-        const usersQuantity = req.body.usersQuantity;
+        const usersQuantity = req.body.usersQuantity || 50
 
         try {
             if (!usersQuantity || typeof usersQuantity === "string") {
@@ -58,12 +58,9 @@ class MocksController {
             }
 
             const users = await MocksServices.generateData(usersQuantity, petsQuantity);
+           
             
-            const mock = await userModel.insertMany(users)
-            await mock.save()
-            
-            //* Actualizar la base de datos de usuarios
-            res.send({ status: "success", payload: mock });
+            res.send({ status: "success", payload: users });
         } catch (error) {
             next(error);
         }

@@ -5,11 +5,11 @@ const collection = 'Pets';
 const schema = new mongoose.Schema({
     name:{
         type:String,
-        required:true,
+        // required:true,
     },
     specie:{
         type:String,
-        required:true
+        // required:true
     },
     birthDate:Date,
     adopted:{
