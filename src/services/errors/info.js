@@ -1,7 +1,7 @@
 //* 2) funcion que genera y da la informacion del mensaje del error
 
-export const generateInfoError = async ( petsQuantity, usersQuantity) => {
-    return await `Los datos esta incompletos o no son validos.
+export const generateInfoError = ( {petsQuantity, usersQuantity}) => {
+    return `Los datos esta incompletos o no son validos.
     Necesitamos recibir los siguientes datos:
     
     - QuantityPets: Number, pero recibimos ${petsQuantity}

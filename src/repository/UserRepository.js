@@ -12,7 +12,7 @@ export default class UserRepository extends GenericRepository{
     getUserById = (id) =>{
         return this.getBy({_id:id})
     }
-    postUsersMany =  (users) => {
+    postUsers = (users) => {
         return this.insertMany(users)
     }
     

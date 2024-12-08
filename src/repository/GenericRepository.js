@@ -23,4 +23,7 @@ export default class GenericRepository {
     delete = (id) =>{
         return this.dao.delete(id);
     }
+    insertMany = (users) => {
+        return this.dao.insertMany(users)
+    }
 }

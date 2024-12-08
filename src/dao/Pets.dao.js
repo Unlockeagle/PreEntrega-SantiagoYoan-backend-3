@@ -21,4 +21,8 @@ export default class Pet {
     delete = (id) =>{
         return petModel.findByIdAndDelete(id);
     }
+    insertMany = (pets) => {
+        const petsMocks = petModel.insertMany(pets)
+        return petsMocks
+    }
 }

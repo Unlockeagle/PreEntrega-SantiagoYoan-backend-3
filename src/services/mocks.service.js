@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { createHash } from "../utils/index.js";
-import userModel from "../dao/models/User.js";
-import petModel from "../dao/models/Pet.js";
+import { usersService } from "../services/index.js"
+import { petsService } from "../services/index.js";
 
 class MocksServices {
     //  generar mascotas (sin owner y con adopted en “false”) de acuerdo a un parámetro numérico.
@@ -46,12 +46,13 @@ class MocksServices {
         const userMocks = await this.genetareUsers(usersQuantity);
         const petsMocks = await this.generatePets(petsQuantity);
 
-        const user = await userModel.insertMany(userMocks);
-        const pets = await petModel.insertMany(petsMocks);
-        await user.save();
-        await pets.save();
+        // const user = await userModel.insertMany(userMocks);
+        const user = await usersService.insertMany(userMocks)
+        const pets = await petsService.insertMany(petsMocks)
+        // await user.save();
+        // await pets.save();
 
-        return ({user, pets})
+        return await (user, pets)
     }
 }
 

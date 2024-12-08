@@ -22,7 +22,8 @@ export default class Users {
     delete = (id) =>{
         return userModel.findByIdAndDelete(id);
     }
-    insertMany = async (users) => {
-        return await userModel.insertMany(users)
+    insertMany = (users) => {
+        const userMocks = userModel.insertMany(users)
+        return userMocks
     }
 }
